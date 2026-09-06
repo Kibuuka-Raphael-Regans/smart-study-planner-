@@ -1,5 +1,7 @@
+import json
 
 sessions = []
+FILE_NAME = "study_log.txt"
 
 def classify_session(duration):
     if duration < 30:
@@ -68,7 +70,7 @@ def view_sessions():
 
         print(
             f"{number:<5}"
-            f"{session['subject']:<20}"
+            f"{session['subject']:<30}"
             f"{session['topic']:<25}"
             f"{session['date']:<15}"
             f"{session['duration']:<12g}"
@@ -90,7 +92,7 @@ def search_by_subject(subject):
         print(f"No sessions were found for '{subject}'.")
         return
 
-    print("-" * 88)
+    print("-" * 98)
     print(
         f"{'No.':<5}"
         f"{'Subject':<20}"
@@ -99,7 +101,7 @@ def search_by_subject(subject):
         f"{'Minutes':<12}"
         f"{'Class':<10}"
     )
-    print("-" * 88)
+    print("-" * 98)
 
     total_minutes = 0
 
@@ -110,7 +112,7 @@ def search_by_subject(subject):
 
         print(
             f"{number:<5}"
-            f"{session['subject']:<20}"
+            f"{session['subject']:<30}"
             f"{session['topic']:<25}"
             f"{session['date']:<15}"
             f"{duration:<12g}"
@@ -123,6 +125,15 @@ def search_by_subject(subject):
 def study_statistics():
     print("\n--- Study Statistics ---")
 
+def save_sessions():
+    try:
+        with open(FILE_NAME, "w") as file:
+            json.dump(sessions, file, indent=4)
+
+        print("Study sessions saved successfully.")
+
+    except OSError:
+        print("The study sessions could not be saved.")
     if not sessions:
         print("No study sessions are available for analysis.")
         return
@@ -163,4 +174,20 @@ def study_statistics():
         f"({longest_session['duration']:g} minutes)"
     )
 
+def load_sessions():
+    global sessions
+
+    try:
+        with open(FILE_NAME, "r") as file:
+            sessions = json.load(file)
+
+        print(f"{len(sessions)} saved session(s) loaded successfully.")
+
+    except FileNotFoundError:
+        sessions = []
+        print("No previous study records found.")
+
+    except json.JSONDecodeError:
+        sessions = []
+        print("The study log is empty or damaged. Starting with no sessions.")
 
