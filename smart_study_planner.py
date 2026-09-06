@@ -77,7 +77,7 @@ def view_sessions():
 
     print("-" * 88)
 
-    def search_by_subject(subject):
+def search_by_subject(subject):
     print("\n--- Search Results ---")
 
     matching_sessions = []
@@ -120,4 +120,47 @@ def view_sessions():
     print("-" * 88)
     print(f"Total time spent on {subject}: {total_minutes:g} minutes")
 
-    
+def study_statistics():
+    print("\n--- Study Statistics ---")
+
+    if not sessions:
+        print("No study sessions are available for analysis.")
+        return
+
+    total_minutes = sum(session["duration"] for session in sessions)
+    total_hours = total_minutes / 60
+
+    subject_totals = {}
+
+    for session in sessions:
+        subject = session["subject"].title()
+        duration = session["duration"]
+
+        if subject in subject_totals:
+            subject_totals[subject] += duration
+        else:
+            subject_totals[subject] = duration
+
+    weakest_subject = min(subject_totals, key=subject_totals.get)
+    longest_session = max(sessions, key=lambda session: session["duration"])
+
+    print(f"Total hours studied overall: {total_hours:.2f} hours")
+
+    print("\nTotal study time per subject:")
+
+    for subject, minutes in subject_totals.items():
+        hours = minutes / 60
+        print(f"{subject}: {hours:.2f} hours")
+
+    print(
+        f"\nWeakest area: {weakest_subject} "
+        f"({subject_totals[weakest_subject] / 60:.2f} hours)"
+    )
+
+    print(
+        f"Longest session: {longest_session['subject']} - "
+        f"{longest_session['topic']} "
+        f"({longest_session['duration']:g} minutes)"
+    )
+
+
