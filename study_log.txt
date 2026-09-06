@@ -1,0 +1,8 @@
+[
+    {
+        "subject": "Programming fundamentals",
+        "topic": "python",
+        "date": "tuesday",
+        "duration": 40.0
+    }
+]
