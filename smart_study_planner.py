@@ -76,3 +76,48 @@ def view_sessions():
         )
 
     print("-" * 88)
+
+    def search_by_subject(subject):
+    print("\n--- Search Results ---")
+
+    matching_sessions = []
+
+    for session in sessions:
+        if session["subject"].lower() == subject.lower():
+            matching_sessions.append(session)
+
+    if not matching_sessions:
+        print(f"No sessions were found for '{subject}'.")
+        return
+
+    print("-" * 88)
+    print(
+        f"{'No.':<5}"
+        f"{'Subject':<20}"
+        f"{'Topic':<25}"
+        f"{'Date/Day':<15}"
+        f"{'Minutes':<12}"
+        f"{'Class':<10}"
+    )
+    print("-" * 88)
+
+    total_minutes = 0
+
+    for number, session in enumerate(matching_sessions, start=1):
+        duration = session["duration"]
+        classification = classify_session(duration)
+        total_minutes += duration
+
+        print(
+            f"{number:<5}"
+            f"{session['subject']:<20}"
+            f"{session['topic']:<25}"
+            f"{session['date']:<15}"
+            f"{duration:<12g}"
+            f"{classification:<10}"
+        )
+
+    print("-" * 88)
+    print(f"Total time spent on {subject}: {total_minutes:g} minutes")
+
+    
