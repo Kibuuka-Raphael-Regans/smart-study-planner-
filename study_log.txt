@@ -4,5 +4,23 @@
         "topic": "Python",
         "date": "Tuesday",
         "duration": 120.0
+    },
+    {
+        "subject": "Database management",
+        "topic": "Table design",
+        "date": "Monday",
+        "duration": 40.0
+    },
+    {
+        "subject": "Web development",
+        "topic": "website design",
+        "date": "Friday",
+        "duration": 60.0
+    },
+    {
+        "subject": "Mathematics",
+        "topic": "Omplex numbers",
+        "date": "Saturday",
+        "duration": 20.0
     }
 ]
