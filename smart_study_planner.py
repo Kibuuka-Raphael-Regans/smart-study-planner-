@@ -125,19 +125,6 @@ def search_by_subject(subject):
 def study_statistics():
     print("\n--- Study Statistics ---")
 
-def save_sessions():
-    try:
-        with open(FILE_NAME, "w") as file:
-            json.dump(sessions, file, indent=4)
-
-        print("Study sessions saved successfully.")
-
-    except OSError:
-        print("The study sessions could not be saved.")
-    if not sessions:
-        print("No study sessions are available for analysis.")
-        return
-
     total_minutes = sum(session["duration"] for session in sessions)
     total_hours = total_minutes / 60
 
@@ -174,6 +161,19 @@ def save_sessions():
         f"({longest_session['duration']:g} minutes)"
     )
 
+def save_sessions():
+    try:
+        with open(FILE_NAME, "w") as file:
+            json.dump(sessions, file, indent=4)
+
+        print("Study sessions saved successfully.")
+
+    except OSError:
+        print("The study sessions could not be saved.")
+    if not sessions:
+        print("No study sessions are available for analysis.")
+        return
+
 def load_sessions():
     global sessions
 
@@ -191,3 +191,45 @@ def load_sessions():
         sessions = []
         print("The study log is empty or damaged. Starting with no sessions.")
 
+def display_menu():
+    print("\n================================")
+    print("       SMART STUDY PLANNER")
+    print("================================")
+    print("1. Add a study session")
+    print("2. View all sessions")
+    print("3. Search sessions by subject")
+    print("4. View statistics")
+    print("5. Save and exit")
+    print("================================")
+
+def main():
+    load_sessions()
+
+    while True:
+        display_menu()
+
+        choice = input("Enter your choice (1-5): ").strip()
+
+        if choice == "1":
+            add_session()
+
+        elif choice == "2":
+            view_sessions()
+
+        elif choice == "3":
+            subject = input("Enter the subject to search for: ").strip()
+            search_by_subject(subject)
+
+        elif choice == "4":
+            study_statistics()
+
+        elif choice == "5":
+            save_sessions()
+            print("Thank you for using the Smart Study Planner.")
+            break
+
+        else:
+            print("Invalid menu choice. Please select a number from 1 to 5.")
+
+if __name__ == "__main__":
+    main()

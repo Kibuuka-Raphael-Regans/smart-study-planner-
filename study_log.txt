@@ -4,5 +4,11 @@
         "topic": "python",
         "date": "tuesday",
         "duration": 40.0
+    },
+    {
+        "subject": "Programming fundamentals",
+        "topic": "Python",
+        "date": "Tuesday",
+        "duration": 120.0
     }
 ]
